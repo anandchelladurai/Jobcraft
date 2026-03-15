@@ -549,18 +549,6 @@ footer {
     </div>
   </div>
 
-  <!-- API Key -->
-  <div class="api-banner">
-    <span class="api-banner-icon">🔑</span>
-    <div class="api-banner-text">
-      <div class="api-banner-label">Claude API Key required</div>
-      <div class="api-banner-hint">Used only in this browser session · never stored · get yours free at console.anthropic.com</div>
-    </div>
-    <div class="api-banner-input">
-      <input type="password" id="apiKey" placeholder="sk-ant-api03-..." style="width:230px" />
-    </div>
-  </div>
-
   <!-- Region -->
   <div class="region-wrap">
     <div class="section-label">Target Region</div>
@@ -1070,33 +1058,24 @@ function setStep(id, state) {
   document.getElementById(id).className = 'step-item ' + state;
 }
 
-async function callClaude(apiKey, prompt, maxTokens) {
+async function callClaude(prompt, maxTokens) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 60000);
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('/api/generate', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: maxTokens,
-        messages: [{ role: 'user', content: prompt }]
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, maxTokens }),
       signal: ctrl.signal
     });
     clearTimeout(timer);
     if (!res.ok) {
       const e = await res.json().catch(() => ({}));
-      throw new Error(e?.error?.message || `API error ${res.status}`);
+      throw new Error(e?.error || `API error ${res.status}`);
     }
     const data = await res.json();
-    if (data.error) throw new Error(data.error.message);
-    return data.content.map(i => i.text || '').join('');
+    if (data.error) throw new Error(data.error);
+    return data.text;
   } catch(e) {
     clearTimeout(timer);
     if (e.name === 'AbortError') throw new Error('Request timed out. Please try again.');
@@ -1117,7 +1096,6 @@ function esc(s) {
 }
 
 async function generate() {
-  const apiKey   = document.getElementById('apiKey').value.trim();
   const cv       = document.getElementById('cv').value.trim();
   const jobDesc  = document.getElementById('jobDesc').value.trim();
   const jobLevel = document.getElementById('jobLevel').value;
@@ -1125,8 +1103,6 @@ async function generate() {
   const consent  = document.getElementById('consentCheck').checked;
   const R        = REGIONS[currentRegion];
 
-  if (!apiKey)  return showError('Please enter your Claude API key.');
-  if (!apiKey.startsWith('sk-ant-')) return showError('Invalid API key format — should start with sk-ant-');
   if (!cv || cv.length < 100) return showError('Please paste your full CV (minimum 100 characters).');
   if (!jobDesc || jobDesc.length < 50) return showError('Please paste the full job description.');
   if (!consent) return showError('Please tick the data processing consent checkbox to continue.');
@@ -1184,9 +1160,9 @@ Return clean formatted text only — no commentary, no markdown.`;
 
   try {
     const [atsRaw, cvOut, coverOut] = await Promise.all([
-      callClaude(apiKey, atsP, 1000).then(r => { setStep('step1','done'); return r; }),
-      callClaude(apiKey, cvP,  2500).then(r => { setStep('step2','done'); return r; }),
-      callClaude(apiKey, coverP, 1200).then(r => { setStep('step3','done'); return r; })
+      callClaude(atsP, 1000).then(r => { setStep('step1','done'); return r; }),
+      callClaude(cvP,  2500).then(r => { setStep('step2','done'); return r; }),
+      callClaude(coverP, 1200).then(r => { setStep('step3','done'); return r; })
     ]);
 
     renderATS(safeJSON(atsRaw));
@@ -1197,7 +1173,7 @@ Return clean formatted text only — no commentary, no markdown.`;
 
   } catch(e) {
     let msg = e.message;
-    if (msg.includes('401') || msg.includes('authentication')) msg = 'Invalid API key. Check your key at console.anthropic.com';
+    if (msg.includes('401') || msg.includes('authentication')) msg = 'Authentication error. Please contact support.';
     if (msg.includes('429')) msg = 'Rate limit reached. Please wait a moment and retry.';
     if (msg.includes('529') || msg.includes('overload')) msg = 'Anthropic API is temporarily busy. Please retry in a few seconds.';
     showError(msg);
