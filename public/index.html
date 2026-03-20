@@ -4,340 +4,413 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JobCraft — Smart Job Application Engine</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f3f2ef;
+  --bg: #f0f2f7;
   --surface: #ffffff;
-  --surface2: #f8f8f6;
-  --surface3: #f0efec;
-  --border: #e0ddd8;
-  --border2: #c8c4bc;
-  --text: #1a1a1a;
-  --text2: #3d3d3d;
-  --text3: #6b6b6b;
-  --text4: #a0a0a0;
-  --blue: #0a66c2;
-  --blue-light: #e8f0fb;
-  --blue-border: #b8d0f0;
-  --blue-hover: #004182;
-  --green: #057642;
-  --green-light: #e8f5ee;
-  --green-border: #a8d5b8;
-  --red: #cc1016;
-  --red-light: #fdf0f0;
-  --red-border: #f0b8b8;
-  --amber: #915907;
-  --amber-light: #fdf6e8;
-  --amber-border: #f0d898;
-  --r: 8px;
-  --r-lg: 12px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow: 0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.06);
+  --surface2: #f5f6fa;
+  --surface3: #eceef5;
+  --border: #e0e2ec;
+  --border2: #c4c8d8;
+  --navy: #1a1f3c;
+  --navy2: #252b4a;
+  --navy-light: #eef0f8;
+  --text: #1a1f3c;
+  --text2: #454c6e;
+  --text3: #8890b0;
+  --text4: #b4bad0;
+  --green: #0a9d6e;
+  --green-light: #e8f8f3;
+  --green-border: #a8e8d4;
+  --red: #d63030;
+  --red-light: #fef2f2;
+  --red-border: #f4bcbc;
+  --amber: #9a6500;
+  --amber-light: #fef9ec;
+  --amber-border: #f4e0a0;
+  --accent: #4f6ef7;
+  --accent-light: #eef1fe;
+  --accent-border: #c0cbfc;
+  --shadow-sm: 0 1px 4px rgba(26,31,60,0.07), 0 1px 2px rgba(26,31,60,0.04);
+  --shadow: 0 4px 20px rgba(26,31,60,0.09);
+  --shadow-lg: 0 8px 40px rgba(26,31,60,0.13);
+  --r: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  font-family: 'Inter', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* ── Header ── */
-header {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+/* ── Navbar ── */
+nav {
+  background: var(--navy);
   position: sticky; top: 0; z-index: 100;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 16px rgba(26,31,60,0.18);
 }
 
-.header-inner {
-  max-width: 1080px; margin: 0 auto;
-  padding: 0 24px; height: 56px;
-  display: flex; align-items: center; gap: 0;
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 32px; height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
 }
 
-.logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 
-.logo-mark {
-  width: 34px; height: 34px;
-  background: var(--blue);
-  border-radius: 6px;
+.nav-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--accent), #7b9bff);
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 15px; color: white;
-  letter-spacing: -0.5px; flex-shrink: 0;
+  color: white; font-size: 15px; font-weight: 900;
+  letter-spacing: -0.5px;
+  box-shadow: 0 2px 8px rgba(79,110,247,0.4);
 }
 
-.logo-name {
-  font-size: 16px; font-weight: 700;
-  color: var(--text); letter-spacing: -0.3px;
+.nav-logo-name {
+  font-size: 17px; font-weight: 800;
+  color: white; letter-spacing: -0.4px;
 }
 
-.logo-dot { color: var(--blue); }
+.nav-right { display: flex; align-items: center; gap: 24px; }
 
-.header-sep { width: 1px; height: 20px; background: var(--border); margin: 0 16px; }
-
-.header-sub { font-size: 13px; color: var(--text3); font-weight: 400; }
-
-.header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-
-.region-pill {
-  font-size: 12px; color: var(--text3);
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: 20px; padding: 4px 12px; font-weight: 500;
+.nav-link {
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none; transition: color 0.15s;
 }
+.nav-link:hover { color: white; }
 
-.ver-badge {
-  font-size: 11px; color: var(--blue);
-  background: var(--blue-light); border: 1px solid var(--blue-border);
-  border-radius: 20px; padding: 3px 10px; font-weight: 600;
+.nav-region {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px; padding: 4px 12px;
 }
-
-/* ── Layout ── */
-.page-wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 80px; }
 
 /* ── Hero ── */
-.hero {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 32px 36px;
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-sm);
-  animation: fadeUp 0.4s ease both;
+.hero-wrap {
+  background: var(--navy);
+  padding: 36px 24px 52px;
+  text-align: center;
 }
 
-.hero-label {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; font-weight: 600; color: var(--blue);
-  background: var(--blue-light); border: 1px solid var(--blue-border);
-  border-radius: 4px; padding: 3px 10px; margin-bottom: 14px;
-  text-transform: uppercase; letter-spacing: 0.5px;
+.hero-inner { max-width: 680px; margin: 0 auto; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  font-size: 12px; font-weight: 600;
+  border-radius: 20px; padding: 5px 14px; margin-bottom: 28px;
+  letter-spacing: 0.2px;
+}
+
+.hero-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green); flex-shrink: 0;
+  animation: pulse-dot 2s infinite;
+  box-shadow: 0 0 6px var(--green);
 }
 
 .hero h1 {
-  font-size: 26px; font-weight: 700; color: var(--text);
-  letter-spacing: -0.5px; line-height: 1.25; margin-bottom: 10px;
+  font-size: clamp(30px, 5vw, 50px);
+  font-weight: 900;
+  color: #ffffff;
+  -webkit-text-fill-color: #ffffff;
+  letter-spacing: -1.5px; line-height: 1.1;
+  margin-bottom: 18px;
 }
 
-.hero h1 em { font-style: normal; color: var(--blue); }
-
-.hero p { font-size: 14px; color: var(--text3); font-weight: 400; line-height: 1.65; max-width: 520px; }
-
-.hero-stats {
-  display: flex; gap: 24px; margin-top: 20px;
-  padding-top: 20px; border-top: 1px solid var(--border);
+.hero h1 em {
+  font-style: italic;
+  color: #a8bfff;
+  -webkit-text-fill-color: #a8bfff;
 }
 
-.stat { display: flex; align-items: center; gap: 8px; }
-.stat-icon { font-size: 16px; }
-.stat-text { font-size: 12px; color: var(--text3); font-weight: 500; }
-.stat-text strong { color: var(--text2); font-weight: 600; }
-
-/* ── Card ── */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  margin-bottom: 16px;
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  animation: fadeUp 0.4s ease both;
+.hero p {
+  font-size: 16px; color: rgba(255,255,255,0.65);
+  font-weight: 400; line-height: 1.7;
+  max-width: 500px; margin: 0 auto 24px;
 }
 
-.card-head {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 10px;
-  background: var(--surface);
-}
-
-.card-icon-wrap {
-  width: 34px; height: 34px; border-radius: 8px;
+.hero-pills {
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
+  gap: 8px; flex-wrap: wrap;
 }
 
-.card-head-text {}
-.card-title { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -0.1px; }
-.card-sub { font-size: 12px; color: var(--text4); margin-top: 1px; }
-
-.card-body { padding: 20px; }
-
-/* ── API Banner ── */
-.api-banner {
-  background: var(--blue-light);
-  border: 1px solid var(--blue-border);
-  border-radius: var(--r-lg);
-  padding: 16px 20px;
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 16px;
-  animation: fadeUp 0.4s ease both;
+.hero-pill {
+  font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px; padding: 4px 12px;
+  display: flex; align-items: center; gap: 5px;
 }
 
-.api-banner-icon { font-size: 20px; flex-shrink: 0; }
-.api-banner-text { flex: 1; }
-.api-banner-label { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 2px; }
-.api-banner-hint { font-size: 11px; color: #5580a8; }
-.api-banner-input { display: flex; gap: 8px; flex-shrink: 0; }
+/* ── Main form ── */
+.form-section {
+  max-width: 900px; margin: -20px auto 0;
+  padding: 0 24px 56px;
+  position: relative; z-index: 2;
+}
 
-/* ── Region tabs ── */
-.region-wrap { margin-bottom: 16px; animation: fadeUp 0.4s 0.05s ease both; }
-.section-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.form-card {
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
 
-.region-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.form-card-header {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.form-steps {
+  display: flex; align-items: center; gap: 0;
+}
+
+.form-step {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 600; color: var(--text3);
+}
+
+.form-step.active { color: var(--navy); }
+
+.form-step-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--surface3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  flex-shrink: 0;
+}
+
+.form-step.active .form-step-num {
+  background: var(--navy); border-color: var(--navy);
+  color: white;
+}
+
+.form-step-line {
+  width: 28px; height: 1px; background: var(--border);
+  margin: 0 6px; flex-shrink: 0;
+}
+
+.form-card-body { padding: 28px; }
+
+/* ── Region ── */
+.region-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px; flex-wrap: wrap;
+}
+
+.region-label {
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 0.8px; margin-right: 4px;
+}
 
 .region-tab {
-  padding: 7px 16px; border-radius: 20px;
+  padding: 6px 16px; border-radius: 6px;
   border: 1px solid var(--border);
-  background: var(--surface); color: var(--text3);
+  background: var(--surface2); color: var(--text2);
   font-size: 13px; font-weight: 500;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   cursor: pointer; transition: all 0.15s;
-  display: flex; align-items: center; gap: 6px;
 }
 
-.region-tab:hover:not(.active) { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+.region-tab:hover:not(.active) {
+  border-color: var(--navy); color: var(--navy); background: var(--navy-light);
+}
 
 .region-tab.active {
-  background: var(--blue); border-color: var(--blue);
+  background: var(--navy); border-color: var(--navy);
   color: white; font-weight: 600;
-  box-shadow: 0 2px 8px rgba(10,102,194,0.25);
 }
 
 .region-hint {
-  padding: 10px 14px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-left: 3px solid var(--blue);
-  border-radius: 0 var(--r) var(--r) 0;
-  font-size: 12px; color: var(--text3); line-height: 1.7;
+  font-size: 12px; color: var(--text3);
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  padding: 8px 12px; border-radius: 0 6px 6px 0;
+  margin-bottom: 20px;
 }
 
-/* ── Inputs ── */
-input, select, textarea {
-  width: 100%; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--r);
-  padding: 10px 12px; color: var(--text);
-  font-size: 13px; font-family: 'Plus Jakarta Sans', sans-serif;
-  outline: none; transition: all 0.15s; appearance: none;
+/* ── Inputs grid ── */
+.inputs-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 20px; margin-bottom: 20px;
 }
 
-input::placeholder, textarea::placeholder { color: var(--text4); }
+.input-group { display: flex; flex-direction: column; gap: 6px; }
 
-input:focus, select:focus, textarea:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 2px rgba(10,102,194,0.15);
+.input-label-row {
+  display: flex; align-items: center; justify-content: space-between;
 }
 
-input[type="password"] { letter-spacing: 2px; font-size: 12px; }
-textarea { resize: vertical; min-height: 160px; line-height: 1.65; }
-
-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 12px center;
-  padding-right: 32px; cursor: pointer;
+.input-label {
+  font-size: 12px; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.6px;
 }
-
-/* ── Form layout ── */
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.form-group { display: flex; flex-direction: column; gap: 5px; }
-.field-label { font-size: 12px; font-weight: 600; color: var(--text2); }
-
-/* ── Textarea toolbar ── */
-.field-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
 
 .sample-btn {
-  display: inline-flex; align-items: center; gap: 4px;
-  font-size: 11px; font-weight: 600; color: var(--blue);
-  background: var(--blue-light); border: 1px solid var(--blue-border);
-  border-radius: 4px; padding: 3px 9px; cursor: pointer; transition: all 0.15s;
+  font-size: 11px; font-weight: 600; color: var(--accent);
+  background: var(--accent-light); border: 1px solid var(--accent-border);
+  border-radius: 4px; padding: 2px 8px; cursor: pointer;
+  transition: all 0.15s;
 }
-.sample-btn:hover { background: #d4e6f8; }
+.sample-btn:hover { background: #dce3fd; }
 
-/* ── Char count ── */
-.char-row { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
-.char-count { font-size: 11px; color: var(--text4); }
-.char-warn { font-size: 11px; color: var(--amber); font-weight: 500; }
-.char-ok   { font-size: 11px; color: var(--green); font-weight: 500; }
+textarea {
+  width: 100%; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--r);
+  padding: 12px 14px; color: var(--text);
+  font-size: 13px; font-family: 'Inter', sans-serif;
+  outline: none; resize: vertical; min-height: 180px;
+  line-height: 1.65; transition: all 0.15s;
+}
+
+textarea::placeholder { color: var(--text4); }
+
+textarea:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(79,110,247,0.1);
+}
+
+.char-row {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--text4); margin-top: 4px;
+}
+
+.char-ok   { color: var(--green); font-weight: 600; }
+.char-warn { color: var(--amber); font-weight: 600; }
+
+/* ── Options row ── */
+.options-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 16px; margin-bottom: 20px;
+}
+
+.select-group { display: flex; flex-direction: column; gap: 5px; }
+
+.select-label {
+  font-size: 11px; font-weight: 700; color: var(--text2);
+  text-transform: uppercase; letter-spacing: 0.6px;
+}
+
+select {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 10px 32px 10px 12px;
+  color: var(--text); font-size: 13px;
+  font-family: 'Inter', sans-serif; outline: none;
+  appearance: none; cursor: pointer; transition: all 0.15s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238890b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+
+select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,110,247,0.1); }
+select option { background: white; }
+
+/* ── Divider ── */
+.form-divider {
+  height: 1px; background: var(--border);
+  margin: 4px 0 20px;
+}
 
 /* ── Consent ── */
 .consent-row {
   display: flex; gap: 10px; align-items: flex-start;
-  padding: 12px 14px; margin-bottom: 16px;
+  padding: 12px 14px; margin-bottom: 18px;
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--r); cursor: pointer; transition: all 0.15s;
 }
-.consent-row:has(input:checked) { border-color: var(--green-border); background: var(--green-light); }
-.consent-row input[type="checkbox"] {
-  width: 15px; height: 15px; min-height: unset; flex-shrink: 0;
-  margin-top: 1px; accent-color: var(--blue); cursor: pointer; padding: 0;
+
+.consent-row:has(input:checked) {
+  border-color: var(--green-border); background: var(--green-light);
 }
-.consent-text { font-size: 12px; color: var(--text3); line-height: 1.6; cursor: pointer; }
-.consent-text a { color: var(--blue); text-decoration: none; }
+
+.consent-row input[type="checkbox"] {
+  width: 15px; height: 15px; min-height: unset;
+  flex-shrink: 0; margin-top: 1px;
+  accent-color: var(--navy); cursor: pointer; padding: 0;
+}
+
+.consent-text { font-size: 12px; color: var(--text2); line-height: 1.6; cursor: pointer; }
+.consent-text a { color: var(--accent); text-decoration: none; }
 .consent-text a:hover { text-decoration: underline; }
 
-/* ── Primary button ── */
-.btn-primary {
-  width: 100%; padding: 12px 20px; border-radius: var(--r);
-  border: none; cursor: pointer;
-  font-size: 15px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background: var(--blue); color: white;
-  transition: all 0.15s;
+/* ── Generate button ── */
+.btn-generate {
+  width: 100%; padding: 14px;
+  border-radius: var(--r); border: none; cursor: pointer;
+  font-size: 15px; font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, var(--navy), var(--navy2));
+  color: white;
+  transition: all 0.2s;
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  box-shadow: 0 2px 8px rgba(10,102,194,0.3);
+  box-shadow: 0 4px 16px rgba(26,31,60,0.25);
+  letter-spacing: -0.2px;
 }
-.btn-primary:hover:not(:disabled) { background: var(--blue-hover); box-shadow: 0 4px 16px rgba(10,102,194,0.35); transform: translateY(-1px); }
-.btn-primary:active:not(:disabled) { transform: translateY(0); }
-.btn-primary:disabled { background: var(--border2); color: var(--text4); cursor: not-allowed; box-shadow: none; }
 
-/* ── Secondary button ── */
-.btn-secondary {
-  padding: 7px 16px; border-radius: var(--r);
-  border: 1px solid var(--border); background: var(--surface);
-  color: var(--text2); font-size: 13px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all 0.15s;
+.btn-generate:hover:not(:disabled) {
+  background: linear-gradient(135deg, #0f1228, var(--navy));
+  box-shadow: 0 6px 24px rgba(26,31,60,0.35);
+  transform: translateY(-1px);
 }
-.btn-secondary:hover { background: var(--surface2); border-color: var(--border2); }
+
+.btn-generate:active:not(:disabled) { transform: translateY(0); }
+
+.btn-generate:disabled {
+  background: var(--border2); color: var(--text4);
+  cursor: not-allowed; box-shadow: none;
+}
 
 /* ── Loading ── */
 .loading-box {
-  display: none; margin-top: 14px;
-  background: var(--surface); border: 1px solid var(--border);
+  display: none; margin-top: 16px;
+  background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: 20px;
-  box-shadow: var(--shadow-sm);
 }
 
 .loading-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
 
 .spinner {
   width: 18px; height: 18px;
-  border: 2px solid var(--border2); border-top-color: var(--blue);
+  border: 2px solid var(--border2); border-top-color: var(--accent);
   border-radius: 50%; animation: spin 0.8s linear infinite; flex-shrink: 0;
 }
 
-.loading-msg { font-size: 13px; color: var(--text2); font-weight: 500; }
-.loading-sub { font-size: 12px; color: var(--text4); margin-top: 1px; }
+.loading-msg { font-size: 13px; color: var(--text2); font-weight: 600; }
+.loading-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
 
 .steps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-.step-item {
-  border: 1px solid var(--border); border-radius: var(--r);
-  padding: 10px 12px; background: var(--surface2);
-  display: flex; align-items: center; gap: 8px;
+.step-pill {
+  border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 12px; background: var(--surface);
+  display: flex; align-items: center; gap: 7px;
   font-size: 12px; color: var(--text3); font-weight: 500;
   transition: all 0.3s;
 }
-.step-item.running { border-color: var(--blue-border); background: var(--blue-light); color: var(--blue); }
-.step-item.done { border-color: var(--green-border); background: var(--green-light); color: var(--green); }
-.step-icon { font-size: 14px; }
+
+.step-pill.running { border-color: var(--accent-border); color: var(--accent); background: var(--accent-light); animation: pulse-bg 1.5s infinite; }
+.step-pill.done { border-color: var(--green-border); color: var(--green); background: var(--green-light); animation: none; }
 
 /* ── Error ── */
 .error-box {
@@ -347,109 +420,230 @@ select {
   font-size: 13px; color: var(--red); font-weight: 500;
   align-items: center; gap: 12px;
 }
+
 .retry-btn {
   margin-left: auto; padding: 5px 14px; border-radius: 6px;
   border: 1px solid var(--red-border); background: white;
   color: var(--red); font-size: 12px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
-  white-space: nowrap; transition: all 0.15s; flex-shrink: 0;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
 }
 .retry-btn:hover { background: var(--red-light); }
 
-/* ── Privacy note ── */
-.privacy-note {
-  display: flex; gap: 8px; align-items: flex-start;
-  margin-top: 14px; padding: 10px 14px;
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--r); font-size: 11px; color: var(--text4); line-height: 1.65;
+/* ── Trust bar ── */
+.trust-bar {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin-top: 14px;
+  font-size: 12px; color: var(--text4);
+  flex-wrap: wrap;
+}
+.trust-sep { color: var(--border2); }
+
+/* ── What you get ── */
+.features-section {
+  max-width: 900px; margin: 0 auto;
+  padding: 0 24px 64px;
 }
 
-/* ── Results ── */
-.results-wrap { display: none; margin-top: 28px; animation: fadeUp 0.4s ease both; }
-
-.results-topbar {
-  display: flex; align-items: center; justify-content: space-between;
+.section-heading {
+  font-size: 11px; font-weight: 700; color: var(--text3);
+  text-transform: uppercase; letter-spacing: 1px;
   margin-bottom: 16px;
 }
 
-.results-title { font-size: 18px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid;
+  border-radius: var(--r-lg);
+  padding: 20px 20px 20px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+
+.feature-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+.feature-card:nth-child(1) { border-left-color: var(--accent); }
+.feature-card:nth-child(2) { border-left-color: var(--green); }
+.feature-card:nth-child(3) { border-left-color: #f59e0b; }
+
+.feature-icon {
+  font-size: 22px; margin-bottom: 12px; display: block;
+}
+
+.feature-title {
+  font-size: 14px; font-weight: 700; color: var(--navy);
+  letter-spacing: -0.2px; margin-bottom: 6px;
+}
+
+.feature-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+/* ── Transformation section ── */
+.transform-section {
+  background: var(--navy);
+  padding: 72px 24px;
+  margin-bottom: 0;
+}
+
+.transform-inner {
+  max-width: 900px; margin: 0 auto;
+}
+
+.transform-heading {
+  text-align: center;
+  font-size: 26px; font-weight: 800;
+  color: white; letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.transform-sub {
+  text-align: center;
+  font-size: 15px; color: rgba(255,255,255,0.55);
+  margin-bottom: 52px;
+}
+
+.transform-flow {
+  display: grid; grid-template-columns: 1fr 60px 1fr 60px 1fr;
+  align-items: center; gap: 0;
+}
+
+.transform-step {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-lg); padding: 24px 20px;
+  text-align: center;
+}
+
+.transform-step-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin: 0 auto 14px;
+}
+
+.transform-step:nth-child(1) .transform-step-icon { background: rgba(79,110,247,0.2); }
+.transform-step:nth-child(3) .transform-step-icon { background: rgba(10,157,110,0.2); }
+.transform-step:nth-child(5) .transform-step-icon { background: rgba(245,158,11,0.2); }
+
+.transform-step-title {
+  font-size: 14px; font-weight: 700; color: white;
+  margin-bottom: 8px; letter-spacing: -0.2px;
+}
+
+.transform-step-desc {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+}
+
+.transform-arrow {
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.2); font-size: 22px;
+}
+
+.transform-arrow svg {
+  animation: arrow-pulse 2s infinite;
+}
+
+/* ── Results ── */
+.results-wrap {
+  display: none; max-width: 900px;
+  margin: 0 auto; padding: 48px 24px 72px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.results-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.results-title {
+  font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.4px;
+}
+
+.btn-reset {
+  padding: 8px 16px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text2); font-size: 13px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.15s;
+}
+.btn-reset:hover { background: var(--surface2); }
 
 /* ── Tabs ── */
 .tabs-bar {
-  background: var(--surface); border: 1px solid var(--border);
+  display: flex; background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--r-lg) var(--r-lg) 0 0;
-  border-bottom: none; display: flex;
-  box-shadow: var(--shadow-sm);
+  border-bottom: none; overflow: hidden;
 }
 
 .tab-btn {
-  flex: 1; padding: 13px 16px; border: none; background: transparent;
+  flex: 1; padding: 14px 16px; border: none; background: transparent;
   color: var(--text3); font-size: 13px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer;
+  font-family: 'Inter', sans-serif; cursor: pointer;
   border-bottom: 2px solid transparent; transition: all 0.15s;
   display: flex; align-items: center; justify-content: center; gap: 7px;
 }
+
 .tab-btn:hover:not(.active) { color: var(--text2); background: var(--surface2); }
-.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-light); }
+.tab-btn.active { color: var(--navy); border-bottom-color: var(--accent); background: var(--accent-light); }
 
 .tab-panel {
   background: var(--surface);
   border: 1px solid var(--border);
   border-top: none;
   border-radius: 0 0 var(--r-lg) var(--r-lg);
-  padding: 24px;
+  padding: 28px;
   box-shadow: var(--shadow-sm);
 }
 
-/* ── Score card ── */
+/* ── Score ── */
 .score-card {
   border: 1px solid; border-radius: var(--r-lg);
-  padding: 20px 24px; margin-bottom: 18px;
-  display: flex; align-items: center; gap: 20px;
+  padding: 22px 26px; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 22px;
 }
 
-.score-num-wrap { text-align: center; min-width: 80px; flex-shrink: 0; }
-
-.score-num {
-  font-size: 52px; font-weight: 700; line-height: 1;
-  letter-spacing: -2px;
-}
-
-.score-denom { font-size: 12px; font-weight: 500; opacity: 0.6; margin-top: 2px; }
-
-.score-divider { width: 1px; height: 56px; flex-shrink: 0; opacity: 0.2; }
-
+.score-num-wrap { text-align: center; min-width: 84px; flex-shrink: 0; }
+.score-num { font-size: 56px; font-weight: 900; line-height: 1; letter-spacing: -3px; }
+.score-denom { font-size: 12px; font-weight: 600; opacity: 0.55; margin-top: 2px; }
+.score-divider { width: 1px; height: 54px; flex-shrink: 0; opacity: 0.15; }
 .score-info { flex: 1; }
-.score-label { font-size: 16px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.2px; }
-
-.progress-track { height: 5px; background: rgba(0,0,0,0.08); border-radius: 3px; margin-bottom: 8px; overflow: hidden; }
+.score-label { font-size: 17px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.3px; }
+.progress-track { height: 5px; background: rgba(0,0,0,0.07); border-radius: 3px; margin-bottom: 8px; overflow: hidden; }
 .progress-fill { height: 100%; border-radius: 3px; width: 0; transition: width 1.1s cubic-bezier(0.4,0,0.2,1); }
-.score-verdict { font-size: 13px; opacity: 0.75; line-height: 1.55; font-weight: 400; }
+.score-verdict { font-size: 13px; opacity: 0.7; line-height: 1.55; }
 
 /* ── KW grid ── */
 .kw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
 .kw-panel { border: 1px solid var(--border); border-radius: var(--r); padding: 14px; background: var(--surface2); }
-.kw-panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+.kw-panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 10px; }
 .kw-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 .kw-tag { font-size: 11px; padding: 3px 9px; border-radius: 4px; font-weight: 600; border: 1px solid; }
 .tag-green { background: var(--green-light); color: var(--green); border-color: var(--green-border); }
 .tag-red   { background: var(--red-light);   color: var(--red);   border-color: var(--red-border); }
 
-/* ── Insight panel ── */
-.insight-panel { border: 1px solid var(--border); border-radius: var(--r); padding: 16px; margin-bottom: 12px; background: var(--surface); }
+/* ── Insight panels ── */
+.insight-panel { border: 1px solid var(--border); border-radius: var(--r); padding: 16px; margin-bottom: 12px; }
 .insight-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
 .insight-row { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
 .insight-row:last-child { border-bottom: none; padding-bottom: 0; }
-.insight-n { font-size: 11px; color: var(--text4); font-weight: 600; min-width: 18px; margin-top: 1px; }
+.insight-n { font-size: 11px; color: var(--text4); font-weight: 700; min-width: 18px; margin-top: 1px; }
 .insight-t { font-size: 13px; color: var(--text2); line-height: 1.55; }
 
 /* ── Output ── */
 .output-toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.output-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.output-title { font-size: 14px; font-weight: 700; color: var(--navy); }
+
 .btn-copy {
-  padding: 6px 14px; border-radius: var(--r); border: 1px solid var(--border);
-  background: var(--surface); color: var(--text2); font-size: 12px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: all 0.15s;
+  padding: 7px 14px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--text2); font-size: 12px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.15s;
   display: flex; align-items: center; gap: 5px;
 }
 .btn-copy:hover { background: var(--surface2); border-color: var(--border2); }
@@ -457,26 +651,46 @@ select {
 
 .pre-out {
   background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r);
-  padding: 18px; font-size: 13px; color: var(--text2);
-  line-height: 1.85; white-space: pre-wrap; max-height: 560px; overflow-y: auto;
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400;
+  padding: 18px; font-size: 13px; color: var(--text2); line-height: 1.85;
+  white-space: pre-wrap; max-height: 560px; overflow-y: auto;
 }
 
 /* ── Footer ── */
 footer {
-  max-width: 760px; margin: 40px auto 0; padding: 20px;
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  font-size: 11px; color: var(--text4);
+  background: var(--navy);
+  padding: 32px;
 }
-.footer-brand { font-size: 13px; font-weight: 700; color: var(--text3); display: flex; align-items: center; gap: 7px; }
+
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.footer-brand {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 15px; font-weight: 800; color: white;
+}
+
+.footer-brand-icon {
+  width: 28px; height: 28px;
+  background: linear-gradient(135deg, var(--accent), #7b9bff);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 13px; font-weight: 900;
+}
+
+.footer-links { display: flex; gap: 20px; }
+.footer-link { font-size: 12px; color: rgba(255,255,255,0.45); text-decoration: none; }
+.footer-link:hover { color: rgba(255,255,255,0.7); }
+
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
 
 /* ── Toast ── */
 .toast {
   position: fixed; bottom: 24px; right: 24px;
-  background: var(--text); color: white;
+  background: var(--navy); color: white;
   font-size: 12px; font-weight: 600;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   padding: 10px 18px; border-radius: 8px;
   opacity: 0; transform: translateY(6px);
   transition: all 0.2s; pointer-events: none; z-index: 999;
@@ -485,94 +699,141 @@ footer {
 .toast.show { opacity: 1; transform: translateY(0); }
 
 /* ── Animations ── */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse-dot { 0%,100% { opacity: 1; box-shadow: 0 0 6px var(--green); } 50% { opacity: 0.5; box-shadow: none; } }
+@keyframes pulse-bg { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+@keyframes arrow-pulse { 0%,100% { transform: translateX(0); opacity: 0.3; } 50% { transform: translateX(4px); opacity: 0.6; } }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--surface2); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }
 
 /* ── Responsive ── */
-@media (max-width: 600px) {
-  .header-sub { display: none; }
-  .header-sep { display: none; }
-  .page-wrap { padding: 20px 14px 60px; }
-  .hero { padding: 22px 20px; }
-  .hero h1 { font-size: 22px; }
-  .hero-stats { gap: 14px; flex-wrap: wrap; }
-  .form-row { grid-template-columns: 1fr; }
-  .kw-grid { grid-template-columns: 1fr; }
+@media (max-width: 700px) {
+  .hero h1 { font-size: 28px; }
+  .form-card-body { padding: 20px; }
+  .inputs-grid { grid-template-columns: 1fr; }
+  .options-row { grid-template-columns: 1fr; }
   .steps-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .transform-flow { grid-template-columns: 1fr; }
+  .transform-arrow { transform: rotate(90deg); margin: 8px 0; }
+  .kw-grid { grid-template-columns: 1fr; }
   .score-card { flex-direction: column; gap: 14px; }
   .score-divider { display: none; }
-  .api-banner { flex-direction: column; align-items: flex-start; }
-  .api-banner-input { width: 100%; }
-  .api-banner-input input { flex: 1; }
   .tabs-bar { flex-direction: column; }
-  .tab-btn { border-bottom: 1px solid var(--border); border-right: none; }
-  .tab-btn.active { border-bottom-color: var(--blue); }
+  .results-wrap { padding: 32px 16px 56px; }
+  .nav-right .nav-link { display: none; }
+  .footer-links { display: none; }
+  .form-steps { display: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- Header -->
-<header>
-  <div class="header-inner">
-    <div class="logo">
-      <div class="logo-mark">J</div>
-      <span class="logo-name">JobCraft</span>
-    </div>
-    <div class="header-sep"></div>
-    <span class="header-sub">Smart Job Application Engine</span>
-    <div class="header-right">
-      <span class="ver-badge">v5.0</span>
-      <span class="region-pill" id="regionPill">United Kingdom</span>
-    </div>
-  </div>
-</header>
-
-<div class="page-wrap">
-
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-label">✦ Multi-Region · ATS-Optimised · Career Tools</div>
-    <h1>Your next role starts with<br>a <em>stronger application.</em></h1>
-    <p>ATS scoring, tailored CV rewrites and cover letters — crafted for your market, sector and seniority level in seconds.</p>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-icon">🌐</span><span class="stat-text"><strong>UK</strong> · CV format</span></div>
-      <div class="stat"><span class="stat-icon">🌍</span><span class="stat-text"><strong>Europe</strong> · Europass ready</span></div>
-      <div class="stat"><span class="stat-icon">🌏</span><span class="stat-text"><strong>India</strong> · Local conventions</span></div>
-      <div class="stat"><span class="stat-icon">🔒</span><span class="stat-text"><strong>Private</strong> · Nothing stored</span></div>
+<!-- Navbar -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">
+      <div class="nav-logo-icon">J</div>
+      <span class="nav-logo-name">JobCraft</span>
+    </a>
+    <div class="nav-right">
+      <a class="nav-link" href="#transform">How it works</a>
+      <a class="nav-link" href="#features">Features</a>
+      <span class="nav-region" id="regionPill">United Kingdom</span>
     </div>
   </div>
+</nav>
 
-  <!-- Region -->
-  <div class="region-wrap">
-    <div class="section-label">Target Region</div>
-    <div class="region-tabs">
-      <button class="region-tab active" onclick="setRegion('uk',this)">United Kingdom</button>
-      <button class="region-tab" onclick="setRegion('eu',this)">Europe</button>
-      <button class="region-tab" onclick="setRegion('india',this)">India</button>
+<!-- Hero -->
+<div class="hero-wrap">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      UK · Europe · India — Regional CV rules built in
     </div>
-    <div class="region-hint" id="regionHint">UK format: No photo · No DOB · No nationality · 2-page max · Reverse chronological · Cover letter expected</div>
+    <h1 style="color:#ffffff;-webkit-text-fill-color:#ffffff;">Your CV, <span style="color:#a8bfff;-webkit-text-fill-color:#a8bfff;font-style:italic;">rewritten</span><br>for the role you want.</h1>
+    <p style="color:rgba(255,255,255,0.75);-webkit-text-fill-color:rgba(255,255,255,0.75);">ATS score, tailored CV rewrite and cover letter — all in one shot. No account needed, nothing stored.</p>
+    <div class="hero-pills">
+      <div class="hero-pill">✓ Free to use</div>
+      <div class="hero-pill">✓ No signup</div>
+      <div class="hero-pill">✓ 3 regions supported</div>
+      <div class="hero-pill">✓ Results in 30 seconds</div>
+    </div>
   </div>
+</div>
 
-  <!-- Role Details -->
-  <div class="card" style="animation-delay:0.1s">
-    <div class="card-head">
-      <div class="card-icon-wrap" style="background:#eef2ff">🎯</div>
-      <div class="card-head-text">
-        <div class="card-title">Role Details</div>
-        <div class="card-sub">Set your level and sector for accurate tailoring</div>
+<!-- Form -->
+<div class="form-section">
+  <div class="form-card">
+
+    <!-- Header with steps -->
+    <div class="form-card-header">
+      <div class="form-steps">
+        <div class="form-step active">
+          <div class="form-step-num">1</div>
+          Paste CV & JD
+        </div>
+        <div class="form-step-line"></div>
+        <div class="form-step">
+          <div class="form-step-num">2</div>
+          Choose settings
+        </div>
+        <div class="form-step-line"></div>
+        <div class="form-step">
+          <div class="form-step-num">3</div>
+          Get your pack
+        </div>
       </div>
     </div>
-    <div class="card-body">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="field-label">Job Level</label>
+
+    <div class="form-card-body">
+
+      <!-- Region -->
+      <div class="region-row">
+        <span class="region-label">Region</span>
+        <button class="region-tab active" onclick="setRegion('uk',this)">United Kingdom</button>
+        <button class="region-tab" onclick="setRegion('eu',this)">Europe</button>
+        <button class="region-tab" onclick="setRegion('india',this)">India</button>
+      </div>
+      <div class="region-hint" id="regionHint">
+        UK format: No photo · No DOB · No nationality · 2-page max · Reverse chronological
+      </div>
+
+      <!-- CV + JD -->
+      <div class="inputs-grid">
+        <div class="input-group">
+          <div class="input-label-row">
+            <span class="input-label">Your CV</span>
+            <span class="sample-btn" onclick="loadSample('cv')">⚡ Load sample</span>
+          </div>
+          <textarea id="cv" rows="10" placeholder="Paste your CV here — skills, experience, education and certifications only. Do not include personal details such as email, phone number or home address." oninput="updateCount('cv','cvCount','cvStatus',200,5000)"></textarea>
+          <div class="char-row">
+            <span id="cvStatus"></span>
+            <span><span id="cvCount">0</span> chars</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-label-row">
+            <span class="input-label">Job Description</span>
+            <span class="sample-btn" onclick="loadSample('jd')">⚡ Load sample</span>
+          </div>
+          <textarea id="jobDesc" rows="10" placeholder="Paste the full job description here..." oninput="updateCount('jobDesc','jdCount','jdStatus',100,8000)"></textarea>
+          <div class="char-row">
+            <span id="jdStatus"></span>
+            <span><span id="jdCount">0</span> chars</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level + Sector -->
+      <div class="options-row">
+        <div class="select-group">
+          <label class="select-label">Job Level</label>
           <select id="jobLevel">
             <option>Graduate / Entry</option>
             <option>Junior</option>
@@ -584,8 +845,8 @@ footer {
             <option>C-Suite</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="field-label">Sector</label>
+        <div class="select-group">
+          <label class="select-label">Sector</label>
           <select id="sector">
             <option>Technology</option>
             <option>Consulting</option>
@@ -602,155 +863,177 @@ footer {
           </select>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- CV -->
-  <div class="card" style="animation-delay:0.15s">
-    <div class="card-head">
-      <div class="card-icon-wrap" style="background:#e8f5ee">📄</div>
-      <div class="card-head-text">
-        <div class="card-title">Your CV</div>
-        <div class="card-sub">Paste the full text of your current CV</div>
+      <div class="form-divider"></div>
+
+      <!-- Consent -->
+      <div class="consent-row" onclick="toggleConsent()">
+        <input type="checkbox" id="consentCheck" onclick="event.stopPropagation()" />
+        <div class="consent-text">
+          No data is stored by JobCraft — processed in real time and discarded immediately. <a href="https://www.anthropic.com/legal/privacy" target="_blank" onclick="event.stopPropagation()">Privacy policy</a>
+        </div>
       </div>
-    </div>
-    <div class="card-body">
-      <div class="field-toolbar">
-        <label class="field-label">CV Text</label>
-        <span class="sample-btn" onclick="loadSample('cv')">⚡ Load sample CV</span>
-      </div>
-      <textarea id="cv" rows="10" placeholder="Paste your full CV here — the more detail you provide, the better the output..." oninput="updateCount('cv','cvCount','cvStatus',200,5000)"></textarea>
-      <div class="char-row">
-        <span id="cvStatus"></span>
-        <span class="char-count"><span id="cvCount">0</span> characters</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- JD -->
-  <div class="card" style="animation-delay:0.2s">
-    <div class="card-head">
-      <div class="card-icon-wrap" style="background:#fdf6e8">📋</div>
-      <div class="card-head-text">
-        <div class="card-title">Job Description</div>
-        <div class="card-sub">Paste the full job description you're applying for</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="field-toolbar">
-        <label class="field-label">Job Description Text</label>
-        <span class="sample-btn" onclick="loadSample('jd')">⚡ Load sample JD</span>
-      </div>
-      <textarea id="jobDesc" rows="10" placeholder="Paste the complete job description here — including requirements, responsibilities and nice-to-haves..." oninput="updateCount('jobDesc','jdCount','jdStatus',100,8000)"></textarea>
-      <div class="char-row">
-        <span id="jdStatus"></span>
-        <span class="char-count"><span id="jdCount">0</span> characters</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Consent -->
-  <div class="consent-row" onclick="toggleConsent()">
-    <input type="checkbox" id="consentCheck" onclick="event.stopPropagation()" />
-    <div class="consent-text">
-      I understand my CV will be sent to Anthropic's Claude API for processing. No data is stored by JobCraft — everything is processed in real time and discarded immediately.
-      See <a href="https://www.anthropic.com/legal/privacy" target="_blank" onclick="event.stopPropagation()">Anthropic's privacy policy</a>.
-    </div>
-  </div>
-
-  <!-- Generate -->
-  <button class="btn-primary" id="generateBtn" onclick="generate()">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.6 4.4H14l-3.5 2.6 1.4 4.3L8 10.2l-3.9 2.6 1.4-4.3L2 5.9h4.4L8 1.5z" fill="currentColor"/></svg>
-    Generate My Application Pack
-  </button>
-
-  <!-- Loading -->
-  <div class="loading-box" id="loadingBox">
-    <div class="loading-top">
-      <div class="spinner"></div>
-      <div>
-        <div class="loading-msg">Generating your application pack...</div>
-        <div class="loading-sub">Running 3 analyses in parallel · typically 15–30 seconds</div>
-      </div>
-    </div>
-    <div class="steps-grid">
-      <div class="step-item" id="step1"><span class="step-icon">📊</span> ATS Scoring</div>
-      <div class="step-item" id="step2"><span class="step-icon">📄</span> CV Rewrite</div>
-      <div class="step-item" id="step3"><span class="step-icon">✉</span> Cover Letter</div>
-    </div>
-  </div>
-
-  <!-- Error -->
-  <div class="error-box" id="errorBox">
-    <span id="errorMsg"></span>
-    <button class="retry-btn" onclick="generate()">↩ Retry</button>
-  </div>
-
-  <!-- Privacy -->
-  <div class="privacy-note">
-    <span>🔒</span>
-    <span>Your CV and personal data are never stored. All processing happens in real time via Anthropic's Claude API and is discarded immediately after your results are displayed.</span>
-  </div>
-
-  <!-- Results -->
-  <div class="results-wrap" id="resultsWrap">
-    <div class="results-topbar">
-      <div class="results-title">Your Application Pack</div>
-      <button class="btn-secondary" onclick="confirmReset()">↩ Start over</button>
-    </div>
-
-    <div class="tabs-bar">
-      <button class="tab-btn active" onclick="switchTab('ats',this)">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="5" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="1" width="3" height="11" rx="1" fill="currentColor"/></svg>
-        ATS Score
+      <!-- Generate -->
+      <button class="btn-generate" id="generateBtn" onclick="generate()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5l1.6 4.4H14l-3.5 2.6 1.4 4.3L8 10.2l-3.9 2.6 1.4-4.3L2 5.9h4.4L8 1.5z" fill="currentColor"/></svg>
+        Generate My Application Pack
       </button>
-      <button class="tab-btn" onclick="switchTab('cv',this)">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="1" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="4.5" y1="4.5" x2="8.5" y2="4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="8.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Rewritten CV
-      </button>
-      <button class="tab-btn" onclick="switchTab('cover',this)">
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="2.5" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M1.5 4l5 3.5L11.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Cover Letter
-      </button>
-    </div>
 
-    <div class="tab-panel" id="tab-ats"><div id="atsContent"></div></div>
-
-    <div class="tab-panel" id="tab-cv" style="display:none">
-      <div class="output-toolbar">
-        <div class="output-title">ATS-Optimised CV</div>
-        <button class="btn-copy" id="copyCvBtn" onclick="copyEl('cvOut','copyCvBtn')">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Copy CV
-        </button>
+      <!-- Loading -->
+      <div class="loading-box" id="loadingBox">
+        <div class="loading-top">
+          <div class="spinner"></div>
+          <div>
+            <div class="loading-msg">Analysing your application...</div>
+            <div class="loading-sub">Running 3 checks in parallel · 15–30 seconds</div>
+          </div>
+        </div>
+        <div class="steps-grid">
+          <div class="step-pill" id="step1">📊 ATS Scoring</div>
+          <div class="step-pill" id="step2">📄 CV Rewrite</div>
+          <div class="step-pill" id="step3">✉ Cover Letter</div>
+        </div>
       </div>
-      <div class="pre-out" id="cvOut"></div>
-    </div>
 
-    <div class="tab-panel" id="tab-cover" style="display:none">
-      <div class="output-toolbar">
-        <div class="output-title">Cover Letter</div>
-        <button class="btn-copy" id="copyCoverBtn" onclick="copyEl('coverOut','copyCoverBtn')">
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          Copy Letter
-        </button>
+      <!-- Error -->
+      <div class="error-box" id="errorBox">
+        <span id="errorMsg"></span>
+        <button class="retry-btn" onclick="generate()">↩ Retry</button>
       </div>
-      <div class="pre-out" id="coverOut"></div>
+
+      <!-- Trust -->
+      <div class="trust-bar">
+        <span>🔒 Nothing stored</span>
+        <span class="trust-sep">·</span>
+        <span>✓ No account needed</span>
+      </div>
     </div>
   </div>
+</div>
 
+<!-- Features -->
+<div class="features-section" id="features">
+  <div class="section-heading">What you get</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <div class="feature-title">ATS Compatibility Score</div>
+      <div class="feature-desc">See exactly how your CV scores — matched keywords, missing terms, rejection risks and quick wins to boost your chances.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📄</span>
+      <div class="feature-title">Tailored CV Rewrite</div>
+      <div class="feature-desc">A fully rewritten CV optimised for the specific role, region and seniority — with the right keywords naturally woven in.</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✉</span>
+      <div class="feature-title">Cover Letter</div>
+      <div class="feature-desc">A compelling, personalised cover letter written to the job description and regional format — ready to copy and send.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Transformation flow — unique section -->
+<div class="transform-section" id="transform">
+  <div class="transform-inner">
+    <div class="transform-heading">From application to interview</div>
+    <div class="transform-sub">Three steps. Thirty seconds.</div>
+
+    <div class="transform-flow">
+      <div class="transform-step">
+        <div class="transform-step-icon">📋</div>
+        <div class="transform-step-title">Paste your CV & JD</div>
+        <div class="transform-step-desc">Drop in your current CV and the job description. No formatting needed — plain text works perfectly.</div>
+      </div>
+
+      <div class="transform-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="transform-step">
+        <div class="transform-step-icon">⚡</div>
+        <div class="transform-step-title">JobCraft analyses everything</div>
+        <div class="transform-step-desc">ATS scoring, CV rewriting and cover letter generation run simultaneously — tailored to your region and role.</div>
+      </div>
+
+      <div class="transform-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <div class="transform-step">
+        <div class="transform-step-icon">🎯</div>
+        <div class="transform-step-title">Apply with confidence</div>
+        <div class="transform-step-desc">Copy your rewritten CV and cover letter. You know exactly how you score and what to fix before you hit send.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Results -->
+<div class="results-wrap" id="resultsWrap">
+  <div class="results-topbar">
+    <div class="results-title">Your Application Pack</div>
+    <button class="btn-reset" onclick="confirmReset()">↩ Start over</button>
+  </div>
+
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('ats',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="5" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="1" width="3" height="11" rx="1" fill="currentColor"/></svg>
+      ATS Score
+    </button>
+    <button class="tab-btn" onclick="switchTab('cv',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="1" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="4.5" y1="4.5" x2="8.5" y2="4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="8.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Rewritten CV
+    </button>
+    <button class="tab-btn" onclick="switchTab('cover',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="2.5" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M1.5 4l5 3.5L11.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Cover Letter
+    </button>
+  </div>
+
+  <div class="tab-panel" id="tab-ats"><div id="atsContent"></div></div>
+
+  <div class="tab-panel" id="tab-cv" style="display:none">
+    <div class="output-toolbar">
+      <div class="output-title">ATS-Optimised CV</div>
+      <button class="btn-copy" id="copyCvBtn" onclick="copyEl('cvOut','copyCvBtn')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Copy CV
+      </button>
+    </div>
+    <div class="pre-out" id="cvOut"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-cover" style="display:none">
+    <div class="output-toolbar">
+      <div class="output-title">Cover Letter</div>
+      <button class="btn-copy" id="copyCoverBtn" onclick="copyEl('coverOut','copyCoverBtn')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Copy Letter
+      </button>
+    </div>
+    <div class="pre-out" id="coverOut"></div>
+  </div>
 </div>
 
 <!-- Footer -->
 <footer>
-  <div class="footer-brand">
-    <div style="width:24px;height:24px;background:var(--blue);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white">J</div>
-    JobCraft
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-icon">J</div>
+      JobCraft
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="#features">Features</a>
+      <a class="footer-link" href="#transform">How it works</a>
+      <a class="footer-link" href="https://www.anthropic.com/legal/privacy" target="_blank">Privacy</a>
+    </div>
+    <span class="footer-copy">UK · EU · India · Always review before submitting</span>
   </div>
-  <span>UK · EU · India · Powered by Claude · Always review before submitting</span>
 </footer>
 
-<div class="toast" id="toast">✓ Copied to clipboard</div>
+<div class="toast" id="toast">✓ Copied</div>
 
 <script>
 const REGIONS = {
@@ -758,207 +1041,158 @@ const REGIONS = {
     label: 'United Kingdom',
     hint: 'UK format: No photo · No DOB · No nationality · 2-page max · Reverse chronological · Cover letter expected',
     cvRules: `- UK English throughout
-- NO photo, NO date of birth, NO nationality, NO marital status (these are illegal to request in UK hiring)
+- NO photo, NO date of birth, NO nationality, NO marital status
 - Personal statement: max 3 concise lines
 - Maximum 2 pages of content
 - Reverse chronological work history
 - Structure: Personal Statement | Core Skills | Professional Experience | Education | Certifications
-- Quantify achievements with £, %, time saved, or scale where possible
-- Add right to work / visa status note only if directly relevant`,
+- Quantify achievements with £, %, time saved, or scale where possible`,
     coverRules: `- UK English, UK business letter format
-- Strong compelling hook as opener — never use "I am writing to apply for"
-- 3-4 paragraphs: Compelling hook | Why this company specifically | Why you uniquely | Clear call to action
-- Max 350 words · Confident tone without arrogance`,
+- Strong compelling hook — never use "I am writing to apply for"
+- 3-4 paragraphs: Hook | Why this company | Why you | Call to action
+- Max 350 words · Confident but not arrogant`,
     sampleCV: `Sarah Mitchell
-Cloud Security Architect
-London, UK | sarah.mitchell@email.com | +44 7700 900000 | linkedin.com/in/sarahmitchell
+Cloud Security Architect — London, UK
 
 PROFESSIONAL SUMMARY
-Cloud Security Architect with 10 years experience securing enterprise environments across Azure and AWS. Specialised in Zero Trust architecture, IAM governance and DevSecOps. Led security programmes for FTSE 100 organisations across financial services and utilities sectors.
+Cloud Security Architect with 10 years experience securing enterprise environments across Azure and AWS. Specialised in Zero Trust architecture, IAM governance and DevSecOps. Led security programmes for FTSE 100 organisations.
 
 CORE SKILLS
-Microsoft Azure · AWS · Zero Trust · IAM · Entra ID · Conditional Access · Defender for Cloud · SIEM · DevSecOps · Terraform · Python · CISSP
+Microsoft Azure · AWS · Zero Trust · IAM · Entra ID · Conditional Access · Defender for Cloud · DevSecOps · Terraform · CISSP
 
 PROFESSIONAL EXPERIENCE
 
 Senior Cloud Security Architect — Deloitte UK, London (2020–Present)
-- Designed Zero Trust security architecture for a Tier 1 UK bank, reducing attack surface by 45%
-- Led IAM transformation programme for 80,000-user Entra ID tenant
-- Delivered cloud security assessment programme generating £2.1M in new business
-- Managed cross-functional team of 8 security engineers across 3 concurrent client engagements
+- Designed Zero Trust architecture for a Tier 1 UK bank, reducing attack surface by 45%
+- Led IAM transformation for 80,000-user Entra ID tenant
+- Managed cross-functional team of 8 across 3 concurrent engagements
 
 Cloud Security Engineer — HSBC, London (2017–2020)
-- Implemented Privileged Access Management solution securing 4,000 privileged accounts
-- Reduced security incidents by 60% through automated threat detection and response
-- Built Security Operations Centre playbooks adopted across Asia Pacific region
+- Implemented PAM solution securing 4,000 privileged accounts
+- Reduced security incidents by 60% through automated threat detection
 
 EDUCATION
 MSc Information Security — Royal Holloway, University of London, 2014
-BSc Computer Science (First Class Honours) — University of Manchester, 2012
+BSc Computer Science (First Class) — University of Manchester, 2012
 
 CERTIFICATIONS
-CISSP · AZ-500 Azure Security Engineer · AWS Security Specialty · SC-300`,
+CISSP · AZ-500 · AWS Security Specialty · SC-300`,
     sampleJD: `Senior IAM Consultant — Cyber Security Practice
 
-EY is expanding its UK Cyber Security practice and seeking an experienced IAM Consultant to join our growing team.
+EY is expanding its UK Cyber Security practice seeking an experienced IAM Consultant.
 
-Your responsibilities:
-- Lead IAM transformation engagements for enterprise clients across financial services and public sector
-- Design and implement identity governance solutions using Saviynt, SailPoint or Microsoft Entra ID
-- Manage client stakeholders and project delivery teams
-- Contribute to business development and proposal creation
+Responsibilities:
+- Lead IAM transformation engagements for enterprise clients
+- Design identity governance solutions using Entra ID, SailPoint or CyberArk
+- Manage client stakeholders and project delivery
 
 Required:
-- 6+ years IAM experience across Identity Governance, PAM and Access Management
-- Hands-on experience with Entra ID, SailPoint, CyberArk or Okta
-- Strong client-facing and stakeholder management skills
-- Consulting or professional services background preferred
-- SC clearance eligible (UK national or 5+ years UK residency)
+- 6+ years IAM experience
+- Hands-on Entra ID, SailPoint, CyberArk or Okta
+- Strong client-facing skills · SC clearance eligible
 
-Desirable:
-- IAM strategy and roadmap development experience
-- Experience in financial services or public sector
-- Relevant certifications (CISSP, SC-300, etc)
-
-Location: London, Manchester or Edinburgh. Competitive salary + benefits.`
+Location: London. Competitive salary.`
   },
   eu: {
     label: 'Europe',
-    hint: 'EU format: Europass or local · Photo optional by country · CEFR language levels · GDPR clause at bottom',
-    cvRules: `- Use target country language conventions (default to English if not specified)
-- Photo is optional and country-dependent — add a note if including
-- Include Languages section with CEFR levels (e.g. English C2, French B2, German B1)
-- Europass-compatible structure where applicable
-- DOB is expected in some EU countries — include as optional
-- Structure: Profile | Skills | Work Experience | Education | Languages | Certifications
-- Add GDPR consent clause at bottom: "I consent to the processing of my personal data for recruitment purposes"`,
-    coverRules: `- Formal European tone, more structured than UK style
-- Reference the specific country or city of the role
+    hint: 'EU format: Europass compatible · Photo optional by country · CEFR language levels · GDPR clause at bottom',
+    cvRules: `- Use target country conventions (default English)
+- Photo optional — country dependent
+- Include Languages section with CEFR levels
+- Add GDPR consent clause at bottom
+- Structure: Profile | Skills | Work Experience | Education | Languages | Certifications`,
+    coverRules: `- Formal European tone
+- Reference specific country/city of role
 - Mention language abilities where relevant
 - 3-4 paragraphs · max 400 words · close formally`,
     sampleCV: `Marco Bianchi
-Senior Data Engineer
-Milan, Italy | marco.bianchi@email.com | +39 02 0000 0000
+Senior Data Engineer — Berlin, Germany
 
 PROFILE
-Senior Data Engineer with 8 years experience building large-scale data platforms across retail and e-commerce sectors. Expertise in cloud-native data architectures on AWS and GCP. Passionate about data quality and real-time analytics.
+Senior Data Engineer with 8 years building large-scale data platforms. Expert in cloud-native architectures on AWS and GCP.
 
 SKILLS
-Python · Spark · Kafka · dbt · Airflow · AWS · GCP · BigQuery · Redshift · SQL · Terraform
+Python · Spark · Kafka · dbt · Airflow · AWS · GCP · BigQuery · SQL · Terraform
 
 WORK EXPERIENCE
 
 Senior Data Engineer — Zalando SE, Berlin (2021–Present)
 - Built real-time recommendation engine processing 5M events per day
-- Reduced data pipeline latency by 70% through Kafka and Spark Streaming migration
-- Led team of 4 engineers across Germany and Poland
+- Reduced pipeline latency by 70%
 
 Data Engineer — Enel, Milan (2017–2021)
-- Designed enterprise data warehouse migrated to GCP serving 200+ business analysts
-- Automated 80% of manual reporting processes saving 400 hours monthly
+- Designed enterprise data warehouse migrated to GCP for 200+ analysts
 
 EDUCATION
 MSc Computer Engineering — Politecnico di Milano, 2016
 
 LANGUAGES
-Italian (Native) · English (C1) · German (B2) · Spanish (A2)
+Italian (Native) · English (C1) · German (B2)
 
 CERTIFICATIONS
-Google Cloud Professional Data Engineer · AWS Data Analytics Specialty
+Google Cloud Professional Data Engineer
 
-I consent to the processing of my personal data contained in this CV for recruitment purposes.`,
-    sampleJD: `Senior Data Engineer — Data Platform Team
+I consent to the processing of my personal data for recruitment purposes.`,
+    sampleJD: `Senior Data Engineer — Data Platform
 
-We are looking for a Senior Data Engineer to help build and scale our data platform infrastructure across European markets.
+We seek a Senior Data Engineer to scale our platform across European markets.
 
 Requirements:
-- 5+ years data engineering experience
-- Strong Python and SQL skills
-- Experience with streaming technologies (Kafka, Spark)
-- Cloud data platform experience (AWS, GCP or Azure)
-- Workflow orchestration tools (Airflow, Prefect)
-- Experience with dbt or similar transformation tools
+- 5+ years data engineering · Python · SQL · Kafka · Spark
+- Cloud platform experience (AWS or GCP)
+- dbt or similar transformation tools
 
-Nice to have:
-- Experience in retail or e-commerce domain
-- Knowledge of data mesh architecture
-- German language skills (B2+)
-
-Location: Berlin, Germany (hybrid). Competitive package with stock options.`
+Location: Berlin (hybrid).`
   },
   india: {
     label: 'India',
-    hint: 'India format: Career objective · Photo common · DOB & marital status included · Declaration clause · 3-page OK',
-    cvRules: `- Include Career Objective or Professional Summary at the top
-- Photo is commonly included in India — note this for the candidate
-- Date of birth and marital status are commonly included
-- Up to 3 pages acceptable for senior roles
-- Include declaration at bottom: "I hereby declare that all the above information is true and correct to the best of my knowledge"
-- Structure: Career Objective | Technical Skills | Professional Experience | Education | Personal Details | Declaration
-- Include current CTC and expected CTC for senior roles if appropriate
-- List technology certifications prominently`,
-    coverRules: `- Formal and respectful tone throughout
-- Address hiring manager directly if name is known
-- Reference the specific company and role clearly  
-- Highlight key achievements and value proposition
-- Express genuine enthusiasm for growth within the organisation
-- 3-4 paragraphs · max 350 words · close with "Yours sincerely" or "Respectfully yours"`,
+    hint: 'India format: Career objective · Photo common · DOB & marital status · Declaration clause · 3-page OK',
+    cvRules: `- Career Objective at the top
+- Photo commonly included
+- DOB and marital status commonly included
+- Up to 3 pages for senior roles
+- Declaration at bottom: "I hereby declare that all information is true and correct"
+- Structure: Career Objective | Skills | Experience | Education | Personal Details | Declaration
+- Include current CTC and expected CTC for senior roles`,
+    coverRules: `- Formal and respectful tone
+- Reference company and role clearly
+- Highlight achievements and value
+- 3-4 paragraphs · max 350 words · close "Yours sincerely"`,
     sampleCV: `Priya Nair
-Senior Product Manager
-Bangalore, Karnataka
-priya.nair@email.com | +91 98000 00000 | linkedin.com/in/priyanair
+Senior Product Manager — Bangalore
 
 CAREER OBJECTIVE
-Dynamic Senior Product Manager with 8 years of experience in B2B SaaS seeking a challenging leadership role to drive product innovation and deliver exceptional customer value in a high-growth technology organisation.
+Dynamic Senior Product Manager with 8 years experience seeking a leadership role to drive innovation in a high-growth organisation.
 
-TECHNICAL SKILLS
-Product Strategy · Roadmap Planning · Agile/Scrum · JIRA · Figma · SQL · Data Analytics · Stakeholder Management · User Research · A/B Testing
+SKILLS
+Product Strategy · Roadmap Planning · Agile · JIRA · Figma · SQL · User Research
 
-PROFESSIONAL EXPERIENCE
+EXPERIENCE
 
 Senior Product Manager — Freshworks, Bangalore (2020–Present)
-- Led product vision and roadmap for CRM suite serving 15,000+ enterprise customers globally
-- Launched 4 major product features contributing to 35% revenue growth (₹42 Cr incremental ARR)
-- Managed cross-functional team of 12 spanning engineering, design and marketing
-- Reduced customer churn by 18% through AI-powered engagement features
+- Led CRM product serving 15,000+ enterprise customers
+- Launched features contributing to 35% revenue growth (₹42 Cr ARR)
+- Managed cross-functional team of 12
 
-Product Manager — Zoho Corporation, Chennai (2017–2020)
-- Owned end-to-end product lifecycle for Zoho Projects — 500,000 active users
-- Delivered 6 quarterly releases on time and within budget across 2 years
-- Conducted 200+ customer interviews driving evidence-based roadmap decisions
+Product Manager — Zoho, Chennai (2017–2020)
+- Owned Zoho Projects — 500,000 active users
 
 EDUCATION
-MBA (Marketing & Strategy) — IIM Kozhikode, 2016 (Gold Medalist)
-B.Tech Computer Science — NIT Trichy, 2014 (First Class with Distinction)
-
-CERTIFICATIONS
-Certified Scrum Product Owner (CSPO) · Google Analytics Certified · AWS Cloud Practitioner
-
-PERSONAL DETAILS
-Date of Birth: 12/04/1992 | Marital Status: Married | Nationality: Indian
-Current CTC: ₹32 LPA | Expected CTC: ₹42 LPA | Notice Period: 30 days
+MBA — IIM Kozhikode, 2016 (Gold Medalist)
+B.Tech — NIT Trichy, 2014 (First Class)
 
 DECLARATION
-I hereby declare that all the above information is true and correct to the best of my knowledge.`,
+I hereby declare that all the above information is true and correct.`,
     sampleJD: `Senior Product Manager — Enterprise Platform
 
-We are hiring a Senior Product Manager to lead our enterprise platform products and drive growth across India and Southeast Asia.
+Hiring a Senior PM to lead enterprise products across India and Southeast Asia.
 
 Requirements:
-- 6+ years product management experience in B2B SaaS
-- MBA from a premier institute preferred
-- Strong analytical and data-driven approach to product decisions
-- Experience managing cross-functional teams
-- Excellent communication and executive presentation skills
-- Track record of successful product launches at scale
+- 6+ years product management in B2B SaaS
+- MBA from premier institute preferred
+- Strong analytical approach · track record of launches
 
-Good to have:
-- Experience with CRM, ERP or collaboration tools
-- Enterprise sales cycle understanding
-- Exposure to Southeast Asian markets
-
-CTC: ₹35-48 LPA based on experience.
-Location: Bangalore (Koramangala). Hybrid — 3 days in office.`
+CTC: ₹35-48 LPA. Bangalore (hybrid).`
   }
 };
 
@@ -966,8 +1200,7 @@ let currentRegion = 'uk';
 
 function detectRegion() {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-  const lang = navigator.language || '';
-  if (tz.includes('Kolkata') || tz.includes('Calcutta') || lang.startsWith('hi')) {
+  if (tz.includes('Kolkata') || tz.includes('Calcutta')) {
     setRegion('india', document.querySelectorAll('.region-tab')[2]);
   } else if (tz.startsWith('Europe/') && !tz.includes('London')) {
     setRegion('eu', document.querySelectorAll('.region-tab')[1]);
@@ -994,8 +1227,7 @@ function loadSample(type) {
 }
 
 function toggleConsent() {
-  const cb = document.getElementById('consentCheck');
-  cb.checked = !cb.checked;
+  document.getElementById('consentCheck').checked = !document.getElementById('consentCheck').checked;
 }
 
 function updateCount(fId, cId, sId, min, max) {
@@ -1003,9 +1235,9 @@ function updateCount(fId, cId, sId, min, max) {
   document.getElementById(cId).textContent = len.toLocaleString();
   const s = document.getElementById(sId);
   if (!len) { s.textContent = ''; return; }
-  if (len < min) { s.textContent = '⚠ Too short — add more detail'; s.className = 'char-warn'; }
-  else if (len > max) { s.textContent = '⚠ Very long — may affect quality'; s.className = 'char-warn'; }
-  else { s.textContent = '✓ Good length'; s.className = 'char-ok'; }
+  if (len < min) { s.textContent = '⚠ Too short'; s.className = 'char-warn'; }
+  else if (len > max) { s.textContent = '⚠ Very long'; s.className = 'char-warn'; }
+  else { s.textContent = '✓ Good'; s.className = 'char-ok'; }
 }
 
 function switchTab(tab, btn) {
@@ -1022,7 +1254,7 @@ function copyEl(id, btnId) {
     const orig = btn.innerHTML;
     btn.classList.add('copied');
     btn.textContent = '✓ Copied';
-    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2200);
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
     showToast('Copied to clipboard');
   });
 }
@@ -1035,13 +1267,13 @@ function showToast(msg) {
 }
 
 function confirmReset() {
-  if (confirm('Start over? Your inputs and results will be cleared.')) resetForm();
+  if (confirm('Start over? Inputs and results will be cleared.')) resetForm();
 }
 
 function resetForm() {
-  ['cv','jobDesc'].forEach(id => { document.getElementById(id).value = ''; });
-  ['cvCount','jdCount'].forEach(id => { document.getElementById(id).textContent = '0'; });
-  ['cvStatus','jdStatus'].forEach(id => { document.getElementById(id).textContent = ''; });
+  ['cv','jobDesc'].forEach(id => document.getElementById(id).value = '');
+  ['cvCount','jdCount'].forEach(id => document.getElementById(id).textContent = '0');
+  ['cvStatus','jdStatus'].forEach(id => document.getElementById(id).textContent = '');
   document.getElementById('consentCheck').checked = false;
   document.getElementById('errorBox').style.display = 'none';
   document.getElementById('resultsWrap').style.display = 'none';
@@ -1055,7 +1287,7 @@ function showError(msg) {
 }
 
 function setStep(id, state) {
-  document.getElementById(id).className = 'step-item ' + state;
+  document.getElementById(id).className = 'step-pill ' + state;
 }
 
 async function callClaude(prompt, maxTokens) {
@@ -1074,8 +1306,7 @@ async function callClaude(prompt, maxTokens) {
       throw new Error(e?.error || `API error ${res.status}`);
     }
     const data = await res.json();
-    if (data.error) throw new Error(data.error);
-    return data.text;
+    return data.content;
   } catch(e) {
     clearTimeout(timer);
     if (e.name === 'AbortError') throw new Error('Request timed out. Please try again.');
@@ -1086,7 +1317,7 @@ async function callClaude(prompt, maxTokens) {
 function safeJSON(raw) {
   let s = raw.replace(/```json|```/gi, '').trim();
   const a = s.indexOf('{'), b = s.lastIndexOf('}');
-  if (a === -1 || b === -1) throw new Error('Could not parse ATS response. Please try again.');
+  if (a === -1 || b === -1) throw new Error('Could not parse response. Please try again.');
   s = s.slice(a, b+1).replace(/,(\s*[\]}])/g, '$1');
   return JSON.parse(s);
 }
@@ -1105,57 +1336,37 @@ async function generate() {
 
   if (!cv || cv.length < 100) return showError('Please paste your full CV (minimum 100 characters).');
   if (!jobDesc || jobDesc.length < 50) return showError('Please paste the full job description.');
-  if (!consent) return showError('Please tick the data processing consent checkbox to continue.');
+  if (!consent) return showError('Please tick the consent checkbox to continue.');
 
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
-  btn.innerHTML = '<div style="width:15px;height:15px;border:2px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite"></div> Generating...';
+  btn.innerHTML = '<div style="width:15px;height:15px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite"></div> Analysing...';
   document.getElementById('loadingBox').style.display = 'block';
   document.getElementById('errorBox').style.display = 'none';
   document.getElementById('resultsWrap').style.display = 'none';
   setStep('step1','running'); setStep('step2','running'); setStep('step3','running');
 
   const atsP = `You are an expert ATS analyst and senior recruiter for the ${R.label} job market.
-
-CV:
-${cv}
-
-Job Description:
-${jobDesc}
-
+CV: ${cv}
+Job Description: ${jobDesc}
 Level: ${jobLevel} | Sector: ${sector} | Region: ${R.label}
-
-Return ONLY raw JSON — no markdown, no backticks, no explanation:
+Return ONLY raw JSON — no markdown, no backticks:
 {"score":<0-100>,"verdict":"<one sentence>","matchedKeywords":[max 8],"missingKeywords":[max 8],"rejectionRisks":[max 4],"quickWins":[max 4]}`;
 
   const cvP = `You are a senior recruitment consultant for the ${R.label} market specialising in ${sector}.
-
-Rewrite this CV to be perfectly tailored for the job description. Follow ALL rules exactly:
+Rewrite this CV tailored to the job description. Follow ALL rules:
 ${R.cvRules}
-
-ORIGINAL CV:
-${cv}
-
-JOB DESCRIPTION:
-${jobDesc}
-
+ORIGINAL CV: ${cv}
+JOB DESCRIPTION: ${jobDesc}
 Level: ${jobLevel} | Sector: ${sector}
-
 Return clean formatted text only — no commentary, no markdown.`;
 
-  const coverP = `You are an expert career coach for the ${R.label} job market.
-
-Write a compelling, tailored cover letter:
+  const coverP = `You are a career coach for the ${R.label} job market.
+Write a compelling cover letter:
 ${R.coverRules}
-
-CV:
-${cv.substring(0,1500)}
-
-JOB DESCRIPTION:
-${jobDesc}
-
+CV: ${cv.substring(0,1500)}
+JOB DESCRIPTION: ${jobDesc}
 Level: ${jobLevel} | Sector: ${sector}
-
 Return clean formatted text only — no commentary, no markdown.`;
 
   try {
@@ -1173,9 +1384,8 @@ Return clean formatted text only — no commentary, no markdown.`;
 
   } catch(e) {
     let msg = e.message;
-    if (msg.includes('401') || msg.includes('authentication')) msg = 'Authentication error. Please contact support.';
-    if (msg.includes('429')) msg = 'Rate limit reached. Please wait a moment and retry.';
-    if (msg.includes('529') || msg.includes('overload')) msg = 'Anthropic API is temporarily busy. Please retry in a few seconds.';
+    if (msg.includes('429')) msg = 'Rate limit reached. Please wait and retry.';
+    if (msg.includes('529') || msg.includes('overload')) msg = 'Service temporarily busy. Please retry.';
     showError(msg);
     setStep('step1',''); setStep('step2',''); setStep('step3','');
   } finally {
@@ -1188,9 +1398,9 @@ Return clean formatted text only — no commentary, no markdown.`;
 function renderATS(ats) {
   const s = Math.max(0, Math.min(100, parseInt(ats.score)||0));
   let color, bg, border, label;
-  if (s >= 75)      { color=var_('--green');  bg=var_('--green-light');  border=var_('--green-border');  label='Strong Match'; }
-  else if (s >= 50) { color=var_('--amber');  bg=var_('--amber-light');  border=var_('--amber-border');  label='Moderate Match'; }
-  else              { color=var_('--red');    bg=var_('--red-light');    border=var_('--red-border');    label='Weak Match'; }
+  if (s >= 75)      { color='#0a9d6e'; bg='#e8f8f3'; border='#a8e8d4'; label='Strong Match'; }
+  else if (s >= 50) { color='#9a6500'; bg='#fef9ec'; border='#f4e0a0'; label='Moderate Match'; }
+  else              { color='#d63030'; bg='#fef2f2'; border='#f4bcbc'; label='Weak Match'; }
 
   const matched = (ats.matchedKeywords||[]).map(k=>`<span class="kw-tag tag-green">${esc(k)}</span>`).join('');
   const missing = (ats.missingKeywords||[]).map(k=>`<span class="kw-tag tag-red">${esc(k)}</span>`).join('');
@@ -1222,18 +1432,14 @@ function renderATS(ats) {
     </div>
     <div class="insight-panel">
       <div class="insight-title" style="color:var(--red)">⚠ Rejection Risks</div>
-      ${risks||'<div class="insight-row"><div class="insight-t" style="color:var(--text4)">No major rejection risks identified.</div></div>'}
+      ${risks||'<div class="insight-row"><div class="insight-t" style="color:var(--text4)">No major risks found.</div></div>'}
     </div>
     <div class="insight-panel">
       <div class="insight-title" style="color:var(--green)">✦ Quick Wins</div>
-      ${wins||'<div class="insight-row"><div class="insight-t" style="color:var(--text4)">Your CV is already well-optimised for this role.</div></div>'}
+      ${wins||'<div class="insight-row"><div class="insight-t" style="color:var(--text4)">Your CV is well-optimised.</div></div>'}
     </div>`;
 
   setTimeout(() => { const f=document.getElementById('pFill'); if(f) f.style.width=s+'%'; }, 200);
-}
-
-function var_(name) {
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
 detectRegion();
