@@ -51,6 +51,9 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing or invalid maxTokens' });
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return res.status(500).json({ error: 'Server configuration error: API key not set.' });
+  }
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
   try {
