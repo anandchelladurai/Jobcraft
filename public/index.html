@@ -912,6 +912,53 @@ footer {
   </div>
 </div>
 
+<!-- Results — immediately after form -->
+<div class="results-wrap" id="resultsWrap">
+  <div class="results-topbar">
+    <div class="results-title">Your Application Pack</div>
+    <button class="btn-reset" onclick="confirmReset()">↩ Start over</button>
+  </div>
+
+  <div class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('ats',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="5" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="1" width="3" height="11" rx="1" fill="currentColor"/></svg>
+      ATS Score
+    </button>
+    <button class="tab-btn" onclick="switchTab('cv',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="1" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="4.5" y1="4.5" x2="8.5" y2="4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="8.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Rewritten CV
+    </button>
+    <button class="tab-btn" onclick="switchTab('cover',this)">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="2.5" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M1.5 4l5 3.5L11.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Cover Letter
+    </button>
+  </div>
+
+  <div class="tab-panel" id="tab-ats"><div id="atsContent"></div></div>
+
+  <div class="tab-panel" id="tab-cv" style="display:none">
+    <div class="output-toolbar">
+      <div class="output-title">ATS-Optimised CV</div>
+      <button class="btn-copy" id="copyCvBtn" onclick="copyEl('cvOut','copyCvBtn')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Copy CV
+      </button>
+    </div>
+    <div class="pre-out" id="cvOut"></div>
+  </div>
+
+  <div class="tab-panel" id="tab-cover" style="display:none">
+    <div class="output-toolbar">
+      <div class="output-title">Cover Letter</div>
+      <button class="btn-copy" id="copyCoverBtn" onclick="copyEl('coverOut','copyCoverBtn')">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Copy Letter
+      </button>
+    </div>
+    <div class="pre-out" id="coverOut"></div>
+  </div>
+</div>
+
 <!-- Features -->
 <div class="features-section" id="features">
   <div class="section-heading">What you get</div>
@@ -967,53 +1014,6 @@ footer {
         <div class="transform-step-desc">Copy your rewritten CV and cover letter. You know exactly how you score and what to fix before you hit send.</div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Results -->
-<div class="results-wrap" id="resultsWrap">
-  <div class="results-topbar">
-    <div class="results-title">Your Application Pack</div>
-    <button class="btn-reset" onclick="confirmReset()">↩ Start over</button>
-  </div>
-
-  <div class="tabs-bar">
-    <button class="tab-btn active" onclick="switchTab('ats',this)">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="5" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="9" y="1" width="3" height="11" rx="1" fill="currentColor"/></svg>
-      ATS Score
-    </button>
-    <button class="tab-btn" onclick="switchTab('cv',this)">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="2" y="1" width="9" height="11" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><line x1="4.5" y1="4.5" x2="8.5" y2="4.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="6.5" x2="8.5" y2="6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><line x1="4.5" y1="8.5" x2="7" y2="8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      Rewritten CV
-    </button>
-    <button class="tab-btn" onclick="switchTab('cover',this)">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1.5" y="2.5" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2" fill="none"/><path d="M1.5 4l5 3.5L11.5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-      Cover Letter
-    </button>
-  </div>
-
-  <div class="tab-panel" id="tab-ats"><div id="atsContent"></div></div>
-
-  <div class="tab-panel" id="tab-cv" style="display:none">
-    <div class="output-toolbar">
-      <div class="output-title">ATS-Optimised CV</div>
-      <button class="btn-copy" id="copyCvBtn" onclick="copyEl('cvOut','copyCvBtn')">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Copy CV
-      </button>
-    </div>
-    <div class="pre-out" id="cvOut"></div>
-  </div>
-
-  <div class="tab-panel" id="tab-cover" style="display:none">
-    <div class="output-toolbar">
-      <div class="output-title">Cover Letter</div>
-      <button class="btn-copy" id="copyCoverBtn" onclick="copyEl('coverOut','copyCoverBtn')">
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="4" y="4" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 8V2a1 1 0 011-1h6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Copy Letter
-      </button>
-    </div>
-    <div class="pre-out" id="coverOut"></div>
   </div>
 </div>
 
