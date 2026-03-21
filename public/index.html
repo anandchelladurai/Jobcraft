@@ -103,21 +103,11 @@ nav {
 /* ── Hero ── */
 .hero-wrap {
   background: var(--navy);
-  padding: 36px 24px 52px;
+  padding: 20px 24px 28px;
   text-align: center;
 }
 
-.hero-inner { max-width: 680px; margin: 0 auto; }
-
-.hero-badge {
-  display: inline-flex; align-items: center; gap: 7px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.8);
-  font-size: 12px; font-weight: 600;
-  border-radius: 20px; padding: 5px 14px; margin-bottom: 28px;
-  letter-spacing: 0.2px;
-}
+.hero-inner { max-width: 600px; margin: 0 auto; }
 
 .hero-badge-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -127,12 +117,12 @@ nav {
 }
 
 .hero h1 {
-  font-size: clamp(30px, 5vw, 50px);
+  font-size: clamp(20px, 3vw, 28px);
   font-weight: 900;
   color: #ffffff;
   -webkit-text-fill-color: #ffffff;
-  letter-spacing: -1.5px; line-height: 1.1;
-  margin-bottom: 18px;
+  letter-spacing: -0.8px; line-height: 1.2;
+  margin-bottom: 8px;
 }
 
 .hero h1 em {
@@ -142,23 +132,33 @@ nav {
 }
 
 .hero p {
-  font-size: 16px; color: rgba(255,255,255,0.65);
-  font-weight: 400; line-height: 1.7;
-  max-width: 500px; margin: 0 auto 24px;
+  font-size: 13px; color: rgba(255,255,255,0.65);
+  font-weight: 400; line-height: 1.6;
+  max-width: 380px; margin: 0 auto 14px;
 }
 
 .hero-pills {
   display: flex; align-items: center; justify-content: center;
-  gap: 8px; flex-wrap: wrap;
+  gap: 5px; flex-wrap: wrap;
 }
 
 .hero-pill {
-  font-size: 12px; font-weight: 600;
+  font-size: 11px; font-weight: 600;
   color: rgba(255,255,255,0.6);
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px; padding: 4px 12px;
-  display: flex; align-items: center; gap: 5px;
+  border-radius: 20px; padding: 3px 9px;
+  display: flex; align-items: center; gap: 4px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.8);
+  font-size: 10px; font-weight: 600;
+  border-radius: 20px; padding: 3px 10px; margin-bottom: 10px;
+  letter-spacing: 0.2px;
 }
 
 /* ── Main form ── */
@@ -794,7 +794,7 @@ footer {
       <div class="hero-badge-dot"></div>
       UK · Europe · India — Regional CV rules built in
     </div>
-    <h1 style="color:#ffffff;-webkit-text-fill-color:#ffffff;">Outsmart the algorithm.<br><span style="color:#a8bfff;-webkit-text-fill-color:#a8bfff;font-style:italic;">Impress the human.</span></h1>
+    <h1 style="color:#ffffff;-webkit-text-fill-color:#ffffff;text-transform:uppercase;letter-spacing:1px;">OUTSMART THE ALGORITHM. <span style="color:#a8bfff;-webkit-text-fill-color:#a8bfff;font-style:italic;">IMPRESS THE HUMAN.</span></h1>
     <p style="color:rgba(255,255,255,0.75);-webkit-text-fill-color:rgba(255,255,255,0.75);">ATS score, tailored CV rewrite and cover letter — all in one shot. No account needed, nothing stored.</p>
     <div class="hero-pills">
       <div class="hero-pill">✓ Free to use</div>
