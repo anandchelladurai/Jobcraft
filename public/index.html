@@ -1359,7 +1359,16 @@ ${R.cvRules}
 ORIGINAL CV: ${cv}
 JOB DESCRIPTION: ${jobDesc}
 Level: ${jobLevel} | Sector: ${sector}
-Return clean formatted text only — no commentary, no markdown.`;
+
+CRITICAL FORMATTING RULES — you must follow these exactly:
+- Plain text only — absolutely NO asterisks (*), NO bold (**text**), NO italic (*text*)
+- NO markdown of any kind
+- NO dashes used as dividers (---) or (---)
+- Use CAPITAL LETTERS for section headings (e.g. PROFESSIONAL SUMMARY, CORE SKILLS)
+- Use a simple pipe or newline to separate items in skills sections
+- Use plain hyphens (-) only for bullet points at the start of lines
+- Write exactly as a human recruiter would type in Microsoft Word
+- No special characters except standard punctuation`;
 
   const coverP = `You are a career coach for the ${R.label} job market.
 Write a compelling cover letter:
@@ -1367,7 +1376,13 @@ ${R.coverRules}
 CV: ${cv.substring(0,1500)}
 JOB DESCRIPTION: ${jobDesc}
 Level: ${jobLevel} | Sector: ${sector}
-Return clean formatted text only — no commentary, no markdown.`;
+
+CRITICAL FORMATTING RULES — you must follow these exactly:
+- Plain text only — absolutely NO asterisks (*), NO bold (**text**), NO italic (*text*)
+- NO markdown of any kind
+- NO dashes used as dividers (---) or (--)
+- Write in natural flowing paragraphs like a human letter
+- No special characters except standard punctuation`;
 
   try {
     const [atsRaw, cvOut, coverOut] = await Promise.all([
@@ -1376,9 +1391,19 @@ Return clean formatted text only — no commentary, no markdown.`;
       callClaude(coverP, 1200).then(r => { setStep('step3','done'); return r; })
     ]);
 
+    // Strip any markdown that Claude may have returned
+    const cleanText = (text) => text
+      .replace(/\*\*(.*?)\*\*/g, '$1')   // remove bold **text**
+      .replace(/\*(.*?)\*/g, '$1')        // remove italic *text*
+      .replace(/^---+$/gm, '')            // remove --- dividers
+      .replace(/^--+$/gm, '')             // remove -- dividers
+      .replace(/#{1,6}\s/g, '')           // remove ## headings
+      .replace(/\n{3,}/g, '\n\n')         // collapse excess blank lines
+      .trim();
+
     renderATS(safeJSON(atsRaw));
-    document.getElementById('cvOut').textContent = cvOut;
-    document.getElementById('coverOut').textContent = coverOut;
+    document.getElementById('cvOut').textContent = cleanText(cvOut);
+    document.getElementById('coverOut').textContent = cleanText(coverOut);
     document.getElementById('resultsWrap').style.display = 'block';
     setTimeout(() => document.getElementById('resultsWrap').scrollIntoView({ behavior:'smooth', block:'start' }), 150);
 
