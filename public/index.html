@@ -439,6 +439,45 @@ select option { background: white; }
 }
 .trust-sep { color: var(--border2); }
 
+/* ── JD Mode Toggle ── */
+.jd-toggle { display: flex; gap: 6px; margin-bottom: 10px; }
+
+.jd-tab {
+  padding: 6px 16px; border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface2); color: var(--text3);
+  font-size: 12px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.15s;
+}
+.jd-tab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+.jd-tab.active { background: var(--navy); border-color: var(--navy); color: white; }
+
+.jd-url-row { display: flex; gap: 8px; }
+
+.jd-url-row input {
+  flex: 1; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: var(--r);
+  padding: 11px 14px; color: var(--text);
+  font-size: 13px; font-family: 'Inter', sans-serif;
+  outline: none; transition: all 0.15s;
+}
+.jd-url-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,110,247,0.1); }
+
+.btn-fetch {
+  padding: 11px 20px; border-radius: var(--r);
+  border: none; background: var(--accent);
+  color: white; font-size: 13px; font-weight: 700;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
+}
+.btn-fetch:hover { background: #3d5ce0; }
+.btn-fetch:disabled { background: var(--border2); cursor: not-allowed; }
+
+.fetch-status { margin-top: 8px; font-size: 12px; font-weight: 500; min-height: 18px; }
+.fetch-status.loading { color: var(--accent); }
+.fetch-status.success { color: var(--green); }
+.fetch-status.error   { color: var(--red); }
+
 /* ── What you get ── */
 .features-section {
   max-width: 900px; margin: 0 auto;
@@ -755,7 +794,7 @@ footer {
       <div class="hero-badge-dot"></div>
       UK · Europe · India — Regional CV rules built in
     </div>
-    <h1 style="color:#ffffff;-webkit-text-fill-color:#ffffff;">Your CV, <span style="color:#a8bfff;-webkit-text-fill-color:#a8bfff;font-style:italic;">rewritten</span><br>for the role you want.</h1>
+    <h1 style="color:#ffffff;-webkit-text-fill-color:#ffffff;">Outsmart the algorithm.<br><span style="color:#a8bfff;-webkit-text-fill-color:#a8bfff;font-style:italic;">Impress the human.</span></h1>
     <p style="color:rgba(255,255,255,0.75);-webkit-text-fill-color:rgba(255,255,255,0.75);">ATS score, tailored CV rewrite and cover letter — all in one shot. No account needed, nothing stored.</p>
     <div class="hero-pills">
       <div class="hero-pill">✓ Free to use</div>
@@ -822,11 +861,33 @@ footer {
             <span class="input-label">Job Description</span>
             <span class="sample-btn" onclick="loadSample('jd')">⚡ Load sample</span>
           </div>
-          <textarea id="jobDesc" rows="10" placeholder="Paste the full job description here..." oninput="updateCount('jobDesc','jdCount','jdStatus',100,8000)"></textarea>
-          <div class="char-row">
-            <span id="jdStatus"></span>
-            <span><span id="jdCount">0</span> chars</span>
+
+          <!-- JD mode toggle -->
+          <div class="jd-toggle">
+            <button class="jd-tab active" id="jdTabUrl" onclick="switchJDMode('url')">🔗 Paste URL</button>
+            <button class="jd-tab" id="jdTabText" onclick="switchJDMode('text')">📋 Paste Text</button>
           </div>
+
+          <!-- URL input -->
+          <div id="jdUrlMode">
+            <div class="jd-url-row">
+              <input type="url" id="jdUrl" placeholder="https://www.linkedin.com/jobs/view/..." />
+              <button class="btn-fetch" id="fetchBtn" onclick="fetchJD()">Fetch</button>
+            </div>
+            <div class="fetch-status" id="fetchStatus"></div>
+          </div>
+
+          <!-- Text input -->
+          <div id="jdTextMode" style="display:none">
+            <textarea id="jobDesc" rows="10" placeholder="Paste the full job description here..." oninput="updateCount('jobDesc','jdCount','jdStatus',100,8000)"></textarea>
+            <div class="char-row">
+              <span id="jdStatus"></span>
+              <span><span id="jdCount">0</span> chars</span>
+            </div>
+          </div>
+
+          <!-- Hidden textarea that holds the JD text in URL mode -->
+          <textarea id="jobDescHidden" style="display:none" oninput="updateCount('jobDescHidden','jdCount','jdStatus',100,8000)"></textarea>
         </div>
       </div>
 
@@ -1221,8 +1282,16 @@ function loadSample(type) {
     document.getElementById('cv').value = r.sampleCV;
     updateCount('cv','cvCount','cvStatus',200,5000);
   } else {
-    document.getElementById('jobDesc').value = r.sampleJD;
-    updateCount('jobDesc','jdCount','jdStatus',100,8000);
+    // Load sample into whichever mode is active
+    if (currentJDMode === 'url') {
+      document.getElementById('jobDescHidden').value = r.sampleJD;
+      updateCount('jobDescHidden','jdCount','jdStatus',100,8000);
+      document.getElementById('fetchStatus').textContent = '✓ Sample job description loaded';
+      document.getElementById('fetchStatus').className = 'fetch-status success';
+    } else {
+      document.getElementById('jobDesc').value = r.sampleJD;
+      updateCount('jobDesc','jdCount','jdStatus',100,8000);
+    }
   }
 }
 
@@ -1271,9 +1340,12 @@ function confirmReset() {
 }
 
 function resetForm() {
-  ['cv','jobDesc'].forEach(id => document.getElementById(id).value = '');
+  ['cv','jobDesc','jobDescHidden'].forEach(id => document.getElementById(id).value = '');
   ['cvCount','jdCount'].forEach(id => document.getElementById(id).textContent = '0');
   ['cvStatus','jdStatus'].forEach(id => document.getElementById(id).textContent = '');
+  document.getElementById('jdUrl').value = '';
+  document.getElementById('fetchStatus').textContent = '';
+  document.getElementById('fetchStatus').className = 'fetch-status';
   document.getElementById('consentCheck').checked = false;
   document.getElementById('errorBox').style.display = 'none';
   document.getElementById('resultsWrap').style.display = 'none';
@@ -1328,14 +1400,16 @@ function esc(s) {
 
 async function generate() {
   const cv       = document.getElementById('cv').value.trim();
-  const jobDesc  = document.getElementById('jobDesc').value.trim();
+  const jobDesc  = (currentJDMode === 'url'
+    ? document.getElementById('jobDescHidden').value
+    : document.getElementById('jobDesc').value).trim();
   const jobLevel = document.getElementById('jobLevel').value;
   const sector   = document.getElementById('sector').value;
   const consent  = document.getElementById('consentCheck').checked;
   const R        = REGIONS[currentRegion];
 
   if (!cv || cv.length < 100) return showError('Please paste your full CV (minimum 100 characters).');
-  if (!jobDesc || jobDesc.length < 50) return showError('Please paste the full job description.');
+  if (!jobDesc || jobDesc.length < 50) return showError('Please paste a job description or fetch one from a URL.');
   if (!consent) return showError('Please tick the consent checkbox to continue.');
 
   const btn = document.getElementById('generateBtn');
@@ -1465,6 +1539,71 @@ function renderATS(ats) {
     </div>`;
 
   setTimeout(() => { const f=document.getElementById('pFill'); if(f) f.style.width=s+'%'; }, 200);
+}
+
+// ── JD Mode ──
+let currentJDMode = 'url';
+
+function switchJDMode(mode) {
+  currentJDMode = mode;
+  document.getElementById('jdTabUrl').classList.toggle('active', mode === 'url');
+  document.getElementById('jdTabText').classList.toggle('active', mode === 'text');
+  document.getElementById('jdUrlMode').style.display  = mode === 'url'  ? 'block' : 'none';
+  document.getElementById('jdTextMode').style.display = mode === 'text' ? 'block' : 'none';
+}
+
+async function fetchJD() {
+  const url = document.getElementById('jdUrl').value.trim();
+  const status = document.getElementById('fetchStatus');
+  const btn = document.getElementById('fetchBtn');
+
+  if (!url) { status.textContent = '⚠ Please enter a job URL'; status.className = 'fetch-status error'; return; }
+  if (!url.startsWith('http')) { status.textContent = '⚠ Please enter a valid URL starting with http'; status.className = 'fetch-status error'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Fetching...';
+  status.textContent = '⏳ Fetching job description...';
+  status.className = 'fetch-status loading';
+
+  try {
+    // Use a CORS proxy to fetch the page
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+    const res = await fetch(proxyUrl);
+    const data = await res.json();
+
+    if (!data.contents) throw new Error('Could not fetch page content');
+
+    // Extract visible text from HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(data.contents, 'text/html');
+
+    // Remove scripts, styles, nav, footer
+    ['script','style','nav','footer','header','aside'].forEach(tag => {
+      doc.querySelectorAll(tag).forEach(el => el.remove());
+    });
+
+    // Get text content
+    const text = doc.body?.innerText || doc.body?.textContent || '';
+    const cleaned = text.replace(/\s{3,}/g, '\n\n').trim();
+
+    if (cleaned.length < 100) throw new Error('Could not extract enough text from this page');
+
+    // Store in hidden textarea
+    document.getElementById('jobDescHidden').value = cleaned;
+    updateCount('jobDescHidden','jdCount','jdStatus',100,8000);
+
+    status.textContent = `✓ Job description fetched successfully (${cleaned.length.toLocaleString()} chars)`;
+    status.className = 'fetch-status success';
+
+  } catch(e) {
+    status.textContent = `⚠ Could not fetch this URL — try pasting the text instead`;
+    status.className = 'fetch-status error';
+    // Auto-switch to text mode on failure
+    switchJDMode('text');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Fetch';
+  }
 }
 
 detectRegion();
